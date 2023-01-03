@@ -1,0 +1,135 @@
+[
+  {
+    "D:\\nextjs-ts-styled-boilerplate\\next-env.d.ts": "1",
+    "D:\\nextjs-ts-styled-boilerplate\\next.config.js": "2",
+    "D:\\nextjs-ts-styled-boilerplate\\src\\pages\\api\\hello.ts": "3",
+    "D:\\nextjs-ts-styled-boilerplate\\src\\pages\\index.tsx": "4",
+    "D:\\nextjs-ts-styled-boilerplate\\src\\pages\\_app.tsx": "5",
+    "D:\\nextjs-ts-styled-boilerplate\\src\\pages\\_document.tsx": "6"
+  },
+  {
+    "size": 201,
+    "mtime": 1672739245221,
+    "results": "7",
+    "hashOfConfig": "8"
+  },
+  {
+    "size": 144,
+    "mtime": 1672750873425,
+    "results": "9",
+    "hashOfConfig": "8"
+  },
+  {
+    "size": 312,
+    "mtime": 1672740143890,
+    "results": "10",
+    "hashOfConfig": "8"
+  },
+  {
+    "size": 4058,
+    "mtime": 1672742652404,
+    "results": "11",
+    "hashOfConfig": "8"
+  },
+  {
+    "size": 182,
+    "mtime": 1672739917714,
+    "results": "12",
+    "hashOfConfig": "8"
+  },
+  {
+    "size": 233,
+    "mtime": 1672740145337,
+    "results": "13",
+    "hashOfConfig": "8"
+  },
+  {
+    "filePath": "14",
+    "messages": "15",
+    "suppressedMessages": "16",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  "lodabu",
+  {
+    "filePath": "17",
+    "messages": "18",
+    "suppressedMessages": "19",
+    "errorCount": 1,
+    "fatalErrorCount": 1,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": null
+  },
+  {
+    "filePath": "20",
+    "messages": "21",
+    "suppressedMessages": "22",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "23",
+    "messages": "24",
+    "suppressedMessages": "25",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "26",
+    "messages": "27",
+    "suppressedMessages": "28",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "29",
+    "messages": "30",
+    "suppressedMessages": "31",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  "D:\\nextjs-ts-styled-boilerplate\\next-env.d.ts",
+  [],
+  [],
+  "D:\\nextjs-ts-styled-boilerplate\\next.config.js",
+  [
+    "32"
+  ],
+  [],
+  "D:\\nextjs-ts-styled-boilerplate\\src\\pages\\api\\hello.ts",
+  [],
+  [],
+  "D:\\nextjs-ts-styled-boilerplate\\src\\pages\\index.tsx",
+  [],
+  [],
+  "D:\\nextjs-ts-styled-boilerplate\\src\\pages\\_app.tsx",
+  [],
+  [],
+  "D:\\nextjs-ts-styled-boilerplate\\src\\pages\\_document.tsx",
+  [],
+  [],
+  {
+    "ruleId": null,
+    "fatal": true,
+    "severity": 2,
+    "message": "33"
+  },
+  "Parsing error: ESLint was configured to run on `<tsconfigRootDir>/next.config.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json\nHowever, that TSConfig does not include this file. Either:\n- Change ESLint's list of included files to not include this file\n- Change that TSConfig to include this file\n- Create a new TSConfig that includes this file and include it in your parserOptions.project\nSee the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting##i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file"
+]
