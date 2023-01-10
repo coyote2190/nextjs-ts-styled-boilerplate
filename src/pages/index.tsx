@@ -1,16 +1,11 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
-import styled from 'styled-components';
 import styles from '../styles/Home.module.css';
 
 const inter = Inter({
   subsets: ['latin'],
 });
-
-const StyledTest = styled.p`
-  color: red;
-`;
 
 export default function Home() {
   return (
@@ -23,7 +18,6 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <StyledTest>test</StyledTest>
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.tsx</code>
