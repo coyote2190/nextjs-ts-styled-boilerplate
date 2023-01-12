@@ -26,6 +26,7 @@
   ],
   "rules": {
     "no-unused-vars": "warn",
+    "linebreak-style": [0, "error", "windows"],
     "object-curly-newline": [
       "error",
       {
