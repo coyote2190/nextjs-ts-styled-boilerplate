@@ -1,6 +1,7 @@
 import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 import { Roboto } from '@next/font/google';
+import colors from './colors';
 
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -10,10 +11,10 @@ export const roboto = Roboto({
 });
 
 // Create a theme instance.
-const theme = createTheme({
+const muiTheme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: colors.primary,
     },
     secondary: {
       main: '#19857b',
@@ -27,4 +28,4 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+export default muiTheme;

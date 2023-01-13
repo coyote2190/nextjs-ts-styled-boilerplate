@@ -1,15 +1,16 @@
 import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
-import createEmotionCache from '../themes/createEmotionCache';
-import theme, { roboto } from '../themes/theme';
+import { ReactElement } from 'react';
+import createEmotionCache from '../theme/createEmotionCache';
+import muiTheme, { roboto } from '../theme/muiTheme';
 
 export default class MyDocument extends Document {
-  render() {
+  render(): ReactElement {
     return (
       <Html lang="en" className={roboto.className}>
         <Head>
           {/* PWA primary color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="theme-color" content={muiTheme.palette.primary.main} />
           <link rel="shortcut icon" href="/favicon.ico" />
           <meta name="emotion-insertion-point" content="" />
           {(this.props as any).emotionStyleTags}
