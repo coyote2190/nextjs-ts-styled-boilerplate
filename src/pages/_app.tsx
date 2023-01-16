@@ -1,3 +1,4 @@
+import { ApolloProvider } from '@apollo/client';
 import { EmotionCache } from '@emotion/cache';
 import {
   CacheProvider,
@@ -8,6 +9,9 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ReactElement } from 'react';
+import { Provider } from 'react-redux';
+import { useApollo } from '../api/queries/apollo';
+import { store } from '../store';
 import '../styles/globals.css';
 import createEmotionCache from '../theme/createEmotionCache';
 import muiTheme from '../theme/muiTheme';
@@ -25,19 +29,33 @@ type AppPropsWithLayout = AppProps & {
 const App = (props: AppPropsWithLayout): ReactElement => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
+  const apolloClient = useApollo(pageProps);
+
+  // if (myEnvConfig) {
+  //   disableReactDevTools(myEnvConfig.disableReactDevTools);
+  // }
+
+  console.log(process);
+  console.log(process.env);
 
   return (
     <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={muiTheme}>
-        <EmotionThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          {getLayout(<Component {...pageProps} />)}
-        </EmotionThemeProvider>
-      </ThemeProvider>
+      {/* <NoSsr> */}
+      <ApolloProvider client={apolloClient}>
+        <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <ThemeProvider theme={muiTheme}>
+          <EmotionThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Provider store={store}>
+              {getLayout(<Component {...pageProps} />)}
+            </Provider>
+          </EmotionThemeProvider>
+        </ThemeProvider>
+      </ApolloProvider>
+      {/* </NoSsr> */}
     </CacheProvider>
   );
 };

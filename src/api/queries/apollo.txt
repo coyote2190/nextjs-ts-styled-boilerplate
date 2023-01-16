@@ -1,0 +1,199 @@
+import { useMemo } from 'react';
+
+import {
+  ApolloClient,
+  ApolloQueryResult,
+  DefaultOptions,
+  from,
+  HttpLink,
+  InMemoryCache,
+  NormalizedCacheObject,
+  OperationVariables,
+  QueryHookOptions,
+  QueryOptions,
+  QueryResult,
+  TypedDocumentNode,
+  useQuery,
+} from '@apollo/client';
+import ApolloLinkTimeout from 'apollo-link-timeout';
+import fetch from 'cross-fetch';
+import merge from 'deepmerge';
+import isEqual from 'lodash/isEqual';
+
+type ApolloResponse<TypedResponse extends Record<string, unknown> | unknown> =
+  TypedResponse extends Record<string, unknown> ? TypedResponse : any;
+
+const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
+
+let apolloGetClient: ApolloClient<NormalizedCacheObject>;
+let apolloPostClient: ApolloClient<NormalizedCacheObject>;
+
+const isSSR = typeof window === 'undefined';
+
+const createHttpLink = (basePath: string) =>
+  new HttpLink({
+    uri: `${basePath}/buy/graphql`,
+    fetch,
+  });
+
+const timeoutLink = new ApolloLinkTimeout(10000);
+
+/**
+ * getDefaultOptions for client
+ * no-cache on preview env or server side
+ * @returns defaultOptions
+ */
+const getDefaultOptions = (env: string): DefaultOptions => ({
+  query: {
+    ...((env === 'PREVIEW' || isSSR) && { fetchPolicy: 'no-cache' }),
+    errorPolicy: 'all',
+  },
+});
+
+/**
+ * getDefaultOptions for client with no cache
+ * @returns defaultOptions
+ */
+const getDefaultOptionsNoCache = (): DefaultOptions => ({
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+});
+
+/**
+ * Used both client side and server side
+ * @returns Apollo Post Client
+ */
+const createApolloPostClient = (
+  basePath: string
+): ApolloClient<NormalizedCacheObject> =>
+  new ApolloClient({
+    ssrMode: isSSR,
+    link: from([timeoutLink, createHttpLink(basePath)]),
+    cache: new InMemoryCache(),
+    defaultOptions: getDefaultOptionsNoCache(),
+  });
+
+/**
+ * This method is used on client side only
+ */
+const createApolloGetClient = (
+  basePath: string,
+  env: string
+): ApolloClient<NormalizedCacheObject> =>
+  new ApolloClient({
+    ssrMode: false,
+    link: from([timeoutLink, createHttpLink(basePath)]),
+    cache: new InMemoryCache(),
+    defaultOptions: getDefaultOptions(env),
+  });
+
+/**
+ * Initialize the apollo get client and post client (as singleton)
+ * @param initialState
+ * @returns apolloGetClient (this is the one used in useQuery when no client is given to the hook)
+ */
+export function initializeApollo(
+  basePath: string,
+  env: string,
+  initialState: NormalizedCacheObject = {}
+): ApolloClient<NormalizedCacheObject> {
+  if (isSSR) {
+    return createApolloPostClient(basePath);
+  }
+
+  const apolloPostClientInstance =
+    apolloPostClient ?? createApolloPostClient(basePath);
+  const apolloGetClientInstance =
+    apolloGetClient ?? createApolloGetClient(basePath, env);
+
+  if (initialState) {
+    // loggerInstance.debug('use Apollo cache');
+    const existingCache = apolloGetClientInstance.extract();
+
+    const data = merge(initialState, existingCache, {
+      // combine arrays using object equality (like in sets)
+      arrayMerge: (destinationArray: unknown[], sourceArray: unknown[]) => [
+        ...sourceArray,
+        ...destinationArray.filter((d: unknown) =>
+          sourceArray.every((s: unknown) => !isEqual(d, s))
+        ),
+      ],
+    });
+
+    apolloGetClientInstance.cache.restore(data);
+  }
+
+  if (!apolloGetClient) {
+    apolloGetClient = apolloGetClientInstance;
+  }
+  if (!apolloPostClient) {
+    apolloPostClient = apolloPostClientInstance;
+  }
+  return apolloPostClientInstance;
+}
+
+export function useApollo(
+  pageProps: Record<string, NormalizedCacheObject>,
+  basePath: string,
+  env: string
+): ApolloClient<NormalizedCacheObject> {
+  const state = pageProps[APOLLO_STATE_PROP_NAME];
+  const store = useMemo(
+    () => initializeApollo(basePath, env, state),
+    [basePath, env, state]
+  );
+  return store;
+}
+
+/**
+ * Query apollo through SSR
+ * @param args
+ * @returns query response data
+ */
+export const apolloQuerySsr = async <
+  R extends Record<string, unknown> | unknown,
+  TVariables = OperationVariables
+>(
+  args: QueryOptions<TVariables, R>,
+  basePath: string
+): Promise<ApolloQueryResult<ApolloResponse<R>>> => {
+  const { query, variables } = args;
+
+  const apolloData = await createApolloPostClient(basePath).query<
+    ApolloResponse<R>,
+    Record<string, unknown>
+  >({
+    query,
+    variables: {
+      ...variables,
+    },
+  });
+
+  return { ...apolloData };
+};
+
+export const useGetQuery = <TData = unknown, TVariables = OperationVariables>(
+  query: TypedDocumentNode | TypedDocumentNode<TData, TVariables>,
+  options?: Omit<QueryHookOptions<TData, TVariables>, 'client'>
+): QueryResult<TData, TVariables> =>
+  useQuery(query, {
+    client: apolloGetClient,
+    ...(options || {}),
+  });
+
+export const usePostQuery = <TData = unknown, TVariables = OperationVariables>(
+  query: TypedDocumentNode | TypedDocumentNode<TData, TVariables>,
+  options?: Omit<QueryHookOptions<TData, TVariables>, 'client'>
+): QueryResult<TData, TVariables> =>
+  useQuery(query, {
+    client: apolloPostClient,
+    ...(options || {}),
+  });
+
+export { apolloGetClient, apolloPostClient };
