@@ -1,8 +1,10 @@
 export type Colors = Record<keyof typeof colors, string>;
 
 const colors = {
-  primary: '#607d8b',
-  secondary: '#3f51b5',
+  primary: '#193761',
+  secondary: '#64748b',
+  yellow: '#ffc342',
+  red: '#df1d39',
 };
 
 export default colors;
