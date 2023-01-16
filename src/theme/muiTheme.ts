@@ -16,9 +16,6 @@ const muiTheme = createTheme({
     primary: {
       main: colors.primary,
     },
-    secondary: {
-      main: '#19857b',
-    },
     error: {
       main: red.A400,
     },

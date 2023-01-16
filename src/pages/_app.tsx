@@ -12,16 +12,19 @@ import '../styles/globals.css';
 import createEmotionCache from '../theme/createEmotionCache';
 import muiTheme from '../theme/muiTheme';
 import theme from '../theme/themeEmotion';
+import { NextPageWithLayout } from '../types/types';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-interface MyAppProps extends AppProps {
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
   emotionCache?: EmotionCache;
-}
+};
 
-const App = (props: MyAppProps): ReactElement => {
+const App = (props: AppPropsWithLayout): ReactElement => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <CacheProvider value={emotionCache}>
@@ -32,7 +35,7 @@ const App = (props: MyAppProps): ReactElement => {
         <EmotionThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
         </EmotionThemeProvider>
       </ThemeProvider>
     </CacheProvider>
