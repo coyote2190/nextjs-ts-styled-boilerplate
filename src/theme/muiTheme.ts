@@ -10,7 +10,6 @@ export const roboto = Roboto({
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
 });
 
-// Create a theme instance.
 const muiTheme = createTheme({
   palette: {
     primary: {

@@ -1,8 +1,8 @@
 import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ReactElement } from 'react';
-import createEmotionCache from '../theme/createEmotionCache';
-import muiTheme, { roboto } from '../theme/muiTheme';
+import createEmotionCache from 'theme/createEmotionCache';
+import muiTheme, { roboto } from 'theme/muiTheme';
 
 export default class MyDocument extends Document {
   render(): ReactElement {

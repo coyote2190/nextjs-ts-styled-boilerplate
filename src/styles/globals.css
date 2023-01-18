@@ -108,6 +108,13 @@ section {
 }
 
 body {
+  background: rgb(241 245 249);
+  background: linear-gradient(
+    0deg,
+    rgb(241 245 249 / 100%) 0%,
+    rgb(255 255 255 / 100%) 100%
+  );
+  min-height: 100vh;
   line-height: 1;
 }
 
@@ -132,14 +139,4 @@ q::after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-}
-
-body {
-  background: rgb(241 245 249);
-  background: linear-gradient(
-    0deg,
-    rgb(241 245 249 / 100%) 0%,
-    rgb(255 255 255 / 100%) 100%
-  );
-  min-height: 100vh;
 }

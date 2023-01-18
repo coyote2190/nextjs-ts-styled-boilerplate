@@ -1,5 +1,5 @@
+import Hello from 'components/Hello';
 import { FC } from 'react';
-import Hello from '../Hello';
 
 import { StyledHomeContainer } from './StyledHome';
 import { HomeProps } from './types';
