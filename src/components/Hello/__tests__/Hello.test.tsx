@@ -1,10 +1,9 @@
 import { render } from '@testing-library/react';
-
-import HelloComponent from '../Hello.component';
+import Hello from '../Hello.component';
 
 describe('Hello', () => {
   it('renders a Hello component', () => {
-    const { getByTestId } = render(<HelloComponent />);
+    const { getByTestId } = render(<Hello name="Yannick" />);
 
     const rightTitle = getByTestId('helloDataTestId');
 

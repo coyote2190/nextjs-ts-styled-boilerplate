@@ -25,7 +25,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = new HttpLink({
-  uri: 'https://api.mocki.io/v2/c4d7a195/graphql', // Server URL (must be absolute)
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT, // Server URL (must be absolute)
   credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
 });
 

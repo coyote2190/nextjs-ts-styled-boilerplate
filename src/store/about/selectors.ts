@@ -1,3 +1,4 @@
-import { useAppSelector } from '..';
+import { useAppSelector } from 'store';
 
-export const useGetAboutName = (): string => useAppSelector((state) => state.about.name);
+export const useGetAboutName = (): string =>
+  useAppSelector((state) => state.about.name);

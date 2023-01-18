@@ -1,7 +1,4 @@
-// import { Breakpoints as MuiBreakpointsType } from '@mui/material';
 export type Breakpoints = Record<keyof typeof breakpoints, string>;
-
-// export type Breakpoints = MuiBreakpointsType;
 
 const breakpoints = {
   xs: '0',

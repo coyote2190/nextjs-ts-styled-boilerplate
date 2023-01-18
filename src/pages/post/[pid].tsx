@@ -1,8 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
+import PostDetails from 'components/PostDetails';
+import MainLayout from 'layouts/MainLayout';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import PostDetails from '../../components/PostDetails';
-import MainLayout from '../../layouts/MainLayout';
 
 export const ALL_POSTS_QUERY = gql`
   query allPosts {

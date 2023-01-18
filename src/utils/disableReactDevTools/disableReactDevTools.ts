@@ -1,6 +1,8 @@
 // Heavily inspired from : https://github.com/fvilers/disable-react-devtools/blob/master/index.js
 
-import envStringToBoolean from '../envStringToBoolean/envStringToBoolean';
+import envStringToBoolean from 'utils/envStringToBoolean';
+
+declare var window: any;
 
 export const disableReactDevTools = (
   mustDisableReactDevTools = 'true'
